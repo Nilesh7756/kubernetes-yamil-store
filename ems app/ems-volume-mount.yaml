@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: node-emsapp
+  namespace: app-dev
+  labels:
+    name: node-emsapp
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        name: node-emsapp
+    spec:
+      containers:
+      - image: abhishekbadwaik/node-ems-k8s
+        name: node-emsapp
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+        - mountPath: /var/log
+          name: test-volume
+      volumes:
+      - name: test-volume
+        hostPath:
+          path: /nginx/logs/ 
+

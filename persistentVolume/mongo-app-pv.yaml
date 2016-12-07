@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    name: mongologin
+  name: mongodb-logins
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: mongologin
+    spec:
+      containers:
+      - image: abhishekbadwaik/db_login_api_v1
+        name: mongologin
+        ports:
+        - name: mongologin
+          containerPort: 27017
+          
+        volumeMounts:
+            - name: glusterfsvol
+              mountPath: /data/db
+      volumes:
+      - name: glusterfsvol
+        persistentVolumeClaim:
+          claimName: gluster-claim
+

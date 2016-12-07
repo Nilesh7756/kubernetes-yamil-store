@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: jenkins-deployment
+  namespace: app-prod
+  labels:
+    app: jenkins-app
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: jenkins-app
+    spec:
+      containers:
+      - name: jenkins
+        image: jenkins
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+	- containerPort: 50000

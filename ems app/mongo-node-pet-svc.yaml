@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: mongo-app-service
+  name: mongo-app-service
+  namespace: app-dev
+spec:
+  type: NodePort
+  ports:
+  - port: 8082
+    nodePort: 30600
+    targetPort: 3000
+  selector:
+    name: mongodb
