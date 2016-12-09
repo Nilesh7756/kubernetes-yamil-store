@@ -1,0 +1,44 @@
+# A headless service to create DNS records
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongoems
+  labels:
+    app: mongoems
+spec:
+  ports:
+  - port: 82
+    name: web-mongo
+  # *.nginx.default.svc.cluster.local
+  clusterIP: None
+  selector:
+    app: mongoems
+---
+apiVersion: apps/v1alpha1
+kind: PetSet
+metadata:
+  name: web-mongo
+spec:
+  serviceName: "mongoems"
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: mongoems
+      annotations:
+        pod.alpha.kubernetes.io/initialized: "true"  
+    spec:
+      terminationGracePeriodSeconds: 0
+      containers:
+      - name: mongoems
+        image: abhishekbadwaik/mongodb
+        ports:
+        - containerPort: 27017
+          name: web-mongo
+        volumeMounts:
+        - name: glusterfsvol
+          mountPath: /data/db
+      volumes:
+      - name: glusterfsvol
+        persistentVolumeClaim:
+          claimName: gluster-claim
