@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: java-ems
+  labels:
+    name: java-ems
+spec:
+  containers:
+    - image: pushpendrad/emsapp:v3
+      name: java-ems
+      env:
+      - name: DRIVERCLASSNAME
+        value: com.mysql.jdbc.Driver
+      - name: DATABASEURL
+        value: jdbc:mysql://mysql-svc.default:3306/test
+      - name: DBUSERNAME
+        value: root
+      - name: DBPASSWORD
+        value: admin
+      - name: DIALECT
+        value: org.hibernate.dialect.MySQLDialect
+
+      ports:
+        - containerPort: 8080
+          name: java-ems
