@@ -1,0 +1,50 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: java-ems-config
+  labels:
+    name: java-ems-config
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: java-ems-config
+    spec:
+      containers:
+      - image: pushpendrad/emsapp:v3
+        name: java-ems-config
+        env:
+          - name: DRIVERCLASSNAME
+            valueFrom:
+              configMapKeyRef:
+                name: mysql-db-config
+                key: driver.classname
+
+          - name: DATABASEURL
+            valueFrom:
+              configMapKeyRef:
+                name: mysql-db-config
+                key: database.url
+
+          - name: DBUSERNAME
+            valueFrom:
+              configMapKeyRef:
+                name: mysql-db-config
+                key: db.user
+
+          - name: DBPASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: mysql-db-config
+                key: db.password
+
+          - name: DIALECT
+            valueFrom:
+              configMapKeyRef:
+                name: mysql-db-config
+                key: dia.let
+        ports:
+          - containerPort: 8080
+            name: java-ems-config
+  
