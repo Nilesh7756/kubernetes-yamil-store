@@ -9,7 +9,7 @@ spec:
   template:
     metadata:
       labels:
-        app: java-ems-config
+        name: java-ems-config
     spec:
       containers:
       - image: pushpendrad/emsapp:v3
