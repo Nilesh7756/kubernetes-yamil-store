@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: java-ems-svc
+  name: java-ems-svc
+spec:
+  type: NodePort
+  ports:
+  - port: 8082
+    targetPort: 8080
+  selector:
+    name: java-ems

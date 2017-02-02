@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: mysql-svc
+  name: mysql-svc
+spec:
+  type: NodePort
+  ports:
+  - port: 3306
+    targetPort: 3306
+  selector:
+    name: mysql
